@@ -1,35 +1,4 @@
-const experimentRegistry = {
-  heating: document.querySelector("#heating-game"),
-  hydrogen: document.querySelector("#hydrogen-game")
-};
-
-const experimentMenu = document.querySelector("#experiment-menu");
-
-function openExperiment(name) {
-  experimentMenu.hidden = true;
-  Object.entries(experimentRegistry).forEach(([key, screen]) => {
-    screen.hidden = key !== name;
-  });
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function openExperimentMenu() {
-  experimentMenu.hidden = false;
-  Object.values(experimentRegistry).forEach((screen) => {
-    screen.hidden = true;
-  });
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-document.querySelectorAll("[data-experiment]").forEach((button) => {
-  button.addEventListener("click", () => openExperiment(button.dataset.experiment));
-});
-
-document.querySelectorAll("[data-back-to-menu]").forEach((button) => {
-  button.addEventListener("click", openExperimentMenu);
-});
-
-const hydrogenScenario = {
+const hydrogenScenario = new ExperimentScenario({
   id: "hydrogen",
   title: "水素発生実験",
   initialScore: 100,
@@ -91,7 +60,10 @@ const hydrogenScenario = {
       ]
     }
   ]
-};
+});
+
+experimentApp.register("heating", document.querySelector("#heating-game"));
+experimentApp.register("hydrogen", document.querySelector("#hydrogen-game"));
 
 const hydrogenForm = document.querySelector("#hydrogen-form");
 const hydrogenQuestionArea = document.querySelector("#hydrogen-question-area");
@@ -486,7 +458,7 @@ hydrogenBack.addEventListener("click", () => {
 hydrogenRetry.addEventListener("click", resetHydrogenGame);
 hydrogenResultMenu.addEventListener("click", () => {
   resetHydrogenGame();
-  openExperimentMenu();
+  experimentApp.openMenu();
 });
 
 resetHydrogenGame();
