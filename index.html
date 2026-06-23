@@ -93,17 +93,27 @@
           <fieldset class="question-step" data-step="3" hidden>
             <legend><span>04</span> 冷却方法</legend>
             <p class="question-guide">加熱し終わった試験管は、どう冷ます？</p>
-            <div class="option-row">
+            <div class="option-row three">
               <label class="option-card">
                 <input type="radio" name="cooling" value="natural">
-                <span>自然冷却</span>
+                <span>そのまま置く</span>
               </label>
               <label class="option-card">
-                <input type="radio" name="cooling" value="rapid">
-                <span>急冷</span>
+                <input type="radio" name="cooling" value="water">
+                <span>水につける</span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="cooling" value="wet-cloth">
+                <span>濡れ布で急冷</span>
               </label>
             </div>
           </fieldset>
+
+          <section class="reflection-panel" id="reflection-panel" hidden aria-live="polite">
+            <span class="reflection-label" id="reflection-label">加熱の振り返り</span>
+            <h3 id="reflection-title"></h3>
+            <p id="reflection-text"></p>
+          </section>
 
           <div class="step-actions">
             <button class="back-button" id="back-button" type="button" disabled>← もどる</button>
@@ -112,8 +122,11 @@
             </button>
             <button class="start-button" id="start-button" type="submit" hidden>
               <span class="button-icon">▶</span>
-              実験開始
+              <span id="action-button-label">加熱する</span>
               <span class="button-shine" aria-hidden="true"></span>
+            </button>
+            <button class="reflection-button" id="reflection-button" type="button" hidden>
+              Step 4へ <span aria-hidden="true">→</span>
             </button>
           </div>
         </form>
@@ -137,14 +150,18 @@
           </div>
           <div class="apparatus" id="apparatus" aria-hidden="true">
             <div class="holder"></div>
-            <div class="test-tube">
+            <div class="test-tube" id="test-tube">
               <div class="tube-glass"></div>
               <div class="liquid" id="liquid">
                 <span class="bubble b1"></span>
                 <span class="bubble b2"></span>
                 <span class="bubble b3"></span>
+                <span class="bubble b4"></span>
+                <span class="bubble b5"></span>
+                <span class="bubble b6"></span>
               </div>
               <div class="tube-shine"></div>
+              <div class="hot-spot"></div>
               <div class="cracks"><i></i><i></i><i></i></div>
             </div>
           </div>
@@ -158,6 +175,11 @@
             <i></i><i></i><i></i><i></i><i></i>
           </div>
           <div class="steam" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="cooling-props" aria-hidden="true">
+            <div class="water-container"><span></span></div>
+            <div class="wet-cloth"></div>
+          </div>
+          <div class="cool-waves" aria-hidden="true"><i></i><i></i><i></i></div>
           <div class="desk" aria-hidden="true"></div>
           <p class="stage-hint" id="stage-hint">条件を選んで、実験を開始しよう。</p>
         </div>
