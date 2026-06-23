@@ -8,7 +8,40 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="game-shell">
+  <main class="experiment-menu" id="experiment-menu">
+    <header class="menu-header">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">⚗</span>
+        <div>
+          <p class="eyebrow">SCIENCE SAFETY MISSIONS</p>
+          <h1>セーフティ・ラボ</h1>
+        </div>
+      </div>
+      <p>実験前に、危険をシミュレーションしよう。</p>
+    </header>
+    <section class="mission-select" aria-labelledby="mission-select-title">
+      <p class="step-label">SELECT A MISSION</p>
+      <h2 id="mission-select-title">予習する実験を選ぼう</h2>
+      <div class="mission-cards">
+        <button class="mission-card heating-mission" type="button" data-experiment="heating">
+          <span class="mission-number">MISSION 01</span>
+          <span class="mission-symbol" aria-hidden="true">♨</span>
+          <strong>試験管加熱</strong>
+          <small>加熱・冷却とガラス器具の安全</small>
+          <span class="mission-start">実験へ進む →</span>
+        </button>
+        <button class="mission-card hydrogen-mission" type="button" data-experiment="hydrogen">
+          <span class="mission-number">MISSION 02</span>
+          <span class="mission-symbol" aria-hidden="true">H₂</span>
+          <strong>水素発生実験</strong>
+          <small>気体の集め方と爆鳴気の危険</small>
+          <span class="mission-start">実験へ進む →</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <main class="game-shell app-screen" id="heating-game" hidden>
     <header class="game-header">
       <div class="brand">
         <span class="brand-mark" aria-hidden="true">⚗</span>
@@ -21,6 +54,7 @@
         <span>MISSION 01</span>
         <strong>試験管加熱</strong>
       </div>
+      <button class="menu-button" type="button" data-back-to-menu>実験選択へ</button>
     </header>
 
     <section class="game-grid">
@@ -192,6 +226,127 @@
     </section>
   </main>
 
+  <main class="hydrogen-shell app-screen" id="hydrogen-game" hidden>
+    <header class="hydrogen-header">
+      <div class="brand">
+        <span class="brand-mark hydrogen-mark" aria-hidden="true">H₂</span>
+        <div>
+          <p class="eyebrow">HYDROGEN SAFETY MISSION</p>
+          <h1>水素発生実験</h1>
+        </div>
+      </div>
+      <div class="hydrogen-score" aria-live="polite">
+        <span>SAFETY SCORE</span>
+        <strong id="hydrogen-score">100</strong>
+      </div>
+      <button class="menu-button" type="button" data-back-to-menu>実験選択へ</button>
+    </header>
+
+    <section class="hydrogen-layout">
+      <section class="hydrogen-controls" aria-labelledby="hydrogen-step-title">
+        <div class="hydrogen-progress-header">
+          <div>
+            <p class="step-label">安全な手順を組み立てよう</p>
+            <h2 id="hydrogen-step-title">実験器具を選ぶ</h2>
+          </div>
+          <div class="step-counter">
+            <strong id="hydrogen-step-number">1</strong><span>/ 6</span>
+          </div>
+        </div>
+        <div class="step-progress hydrogen-progress" aria-hidden="true">
+          <span id="hydrogen-progress-bar"></span>
+        </div>
+
+        <form id="hydrogen-form">
+          <div id="hydrogen-question-area"></div>
+          <div class="hydrogen-observation" id="hydrogen-observation" hidden aria-live="polite">
+            <span>観察</span>
+            <p id="hydrogen-observation-text"></p>
+          </div>
+          <div class="step-actions hydrogen-actions">
+            <button class="back-button" id="hydrogen-back" type="button">← もどる</button>
+            <button class="next-button" id="hydrogen-next" type="button" disabled>
+              操作する <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="hydrogen-stage" aria-label="水素発生実験シミュレーション">
+        <div class="status-strip">
+          <span class="status-light"></span>
+          <span id="hydrogen-status">SETUP</span>
+          <span class="status-code">H2-LAB</span>
+        </div>
+        <div class="hydrogen-scene" id="hydrogen-scene">
+          <div class="lab-wall" aria-hidden="true"></div>
+          <div class="hazard-flash" aria-hidden="true"></div>
+          <div class="reaction-rig" id="reaction-rig" aria-hidden="true">
+            <div class="selected-vessel test-tube-vessel" id="reaction-vessel">
+              <div class="reaction-liquid"></div>
+              <div class="metal-pieces"><i></i><i></i><i></i></div>
+              <div class="gas-bubbles">
+                <i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+              <div class="vessel-cracks"><i></i><i></i><i></i></div>
+            </div>
+            <div class="stopper"></div>
+            <div class="delivery-tube"></div>
+          </div>
+          <div class="collection-trough" aria-hidden="true">
+            <div class="trough-water"></div>
+            <div class="collection-tube">
+              <div class="collected-gas" id="collected-gas"></div>
+              <div class="air-layer"></div>
+              <div class="collection-cracks"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <div class="match" aria-hidden="true">
+            <div class="match-flame"></div>
+            <div class="match-stick"></div>
+          </div>
+          <div class="gas-flow" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <div class="explosion" aria-hidden="true"><span>BOOM!</span></div>
+          <div class="pressure-meter" aria-hidden="true">
+            <span>PRESSURE</span><i></i>
+          </div>
+          <div class="hydrogen-desk" aria-hidden="true"></div>
+          <p class="stage-hint" id="hydrogen-hint">器具を選んで実験を始めよう。</p>
+        </div>
+        <div class="safety-tip">
+          <span class="tip-icon">i</span>
+          <p><strong>観察ポイント</strong> 選んだ操作で、装置に何が起こるか見てみよう。</p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <section class="hydrogen-result-overlay" id="hydrogen-result-overlay" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="hydrogen-result-title">
+    <div class="hydrogen-result-card" id="hydrogen-result-card">
+      <p class="result-kicker" id="hydrogen-result-kicker">MISSION REVIEW</p>
+      <h2 id="hydrogen-result-title">実験の振り返り</h2>
+      <div class="final-score">
+        <span>最終スコア</span>
+        <strong id="hydrogen-final-score">100</strong><small>点</small>
+      </div>
+      <p class="hydrogen-result-summary" id="hydrogen-result-summary"></p>
+      <div class="accident-explanation" id="accident-explanation" hidden>
+        <article><h3>何が起きた？</h3><p id="hydrogen-what"></p></article>
+        <article><h3>なぜ起きた？</h3><p id="hydrogen-why"></p></article>
+        <article><h3>授業で学ぶポイント</h3><p id="hydrogen-lesson"></p></article>
+      </div>
+      <section class="choice-review">
+        <h3>選んだ操作と結果</h3>
+        <ol id="hydrogen-choice-list"></ol>
+      </section>
+      <div class="dummy-stat" id="hydrogen-stat"></div>
+      <div class="result-actions">
+        <button class="retry-button" id="hydrogen-retry" type="button">もう一度ためす</button>
+        <button class="menu-result-button" id="hydrogen-result-menu" type="button">実験選択へ</button>
+      </div>
+    </div>
+  </section>
+
   <section class="result-overlay" id="result-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="result-title">
     <div class="result-card" id="result-card">
       <button class="close-button" id="close-result" type="button" aria-label="結果を閉じる">×</button>
@@ -225,5 +380,6 @@
   </section>
 
   <script src="script.js"></script>
+  <script src="hydrogen.js"></script>
 </body>
 </html>
