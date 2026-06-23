@@ -37,9 +37,133 @@
           <small>気体の集め方と爆鳴気の危険</small>
           <span class="mission-start">実験へ進む →</span>
         </button>
+        <button class="mission-card sulfide-mission" type="button" data-experiment="hydrogen-sulfide">
+          <span class="mission-number">MISSION 03</span>
+          <span class="mission-symbol" aria-hidden="true">H₂S</span>
+          <strong>硫化水素発生実験</strong>
+          <small>有毒な気体の観察・換気・廃液処理</small>
+          <span class="mission-start">実験へ進む →</span>
+        </button>
       </div>
     </section>
   </main>
+
+  <main class="scenario-shell app-screen sulfide-shell" id="hydrogen-sulfide-game" hidden>
+    <header class="scenario-header sulfide-header">
+      <div class="brand">
+        <span class="brand-mark sulfide-mark" aria-hidden="true">H₂S</span>
+        <div>
+          <p class="eyebrow">TOXIC GAS SAFETY MISSION</p>
+          <h1 id="scenario-game-title">硫化水素発生実験</h1>
+        </div>
+      </div>
+      <div class="hydrogen-score scenario-score" aria-live="polite">
+        <span>SAFETY SCORE</span>
+        <strong id="scenario-score">100</strong>
+      </div>
+      <button class="menu-button" type="button" data-back-to-menu>実験選択へ</button>
+    </header>
+
+    <section class="scenario-layout">
+      <section class="scenario-controls" aria-labelledby="scenario-step-title">
+        <div class="hydrogen-progress-header">
+          <div>
+            <p class="step-label">現象を観察して安全に進めよう</p>
+            <h2 id="scenario-step-title"></h2>
+          </div>
+          <div class="step-counter">
+            <strong id="scenario-step-number">1</strong><span id="scenario-step-total">/ 6</span>
+          </div>
+        </div>
+        <div class="step-progress scenario-progress" aria-hidden="true">
+          <span id="scenario-progress-bar"></span>
+        </div>
+        <form id="scenario-form">
+          <div id="scenario-question-area"></div>
+          <div class="hydrogen-observation scenario-observation" id="scenario-observation" hidden aria-live="polite">
+            <span>観察</span>
+            <p id="scenario-observation-text"></p>
+          </div>
+          <div class="step-actions">
+            <button class="back-button" id="scenario-back" type="button">← もどる</button>
+            <button class="next-button scenario-next" id="scenario-next" type="button" disabled>
+              操作する <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="sulfide-stage" aria-label="硫化水素発生実験シミュレーション">
+        <div class="status-strip">
+          <span class="status-light sulfide-status-light"></span>
+          <span id="scenario-status">SETUP</span>
+          <span class="status-code">H2S-LAB</span>
+        </div>
+        <div class="sulfide-scene" id="scenario-scene">
+          <div class="classroom-wall" aria-hidden="true">
+            <div class="classroom-window"><i></i><i></i></div>
+          </div>
+          <div class="sulfide-warning" aria-hidden="true"><span>⚠</span><strong>有毒ガス警告</strong></div>
+          <div class="sulfide-rig" aria-hidden="true">
+            <div class="sulfide-test-tube">
+              <div class="sulfide-liquid"></div>
+              <div class="iron-sulfide"><i></i><i></i><i></i><i></i></div>
+              <div class="sulfide-bubbles"><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="sulfide-stopper"></div>
+            <div class="sulfide-delivery"></div>
+          </div>
+          <div class="gas-clouds" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+          <div class="fan" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="student-group" aria-hidden="true">
+            <div class="student s1"><i></i><span></span></div>
+            <div class="student s2"><i></i><span></span></div>
+            <div class="student s3"><i></i><span></span></div>
+          </div>
+          <div class="waste-station" aria-hidden="true">
+            <div class="waste-pour"></div>
+            <div class="waste-bottle"><span>廃液</span><i></i></div>
+          </div>
+          <div class="danger-zone" aria-hidden="true">DANGER AREA</div>
+          <div class="ambulance-alert" aria-hidden="true"><span>＋</span> 救急搬送アラート</div>
+          <div class="classroom-floor" aria-hidden="true"></div>
+          <p class="stage-hint" id="scenario-hint">硫化鉄の量を選ぼう。</p>
+        </div>
+        <div class="safety-tip">
+          <span class="tip-icon sulfide-tip">i</span>
+          <p><strong>観察ポイント</strong> 気体がどこに広がり、どこにたまるか確認しよう。</p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <section class="scenario-result-overlay" id="scenario-result-overlay" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="scenario-result-title">
+    <div class="scenario-result-card" id="scenario-result-card">
+      <p class="result-kicker" id="scenario-result-kicker">MISSION REVIEW</p>
+      <h2 id="scenario-result-title">実験の振り返り</h2>
+      <div class="final-score">
+        <span>最終スコア</span>
+        <strong id="scenario-final-score">100</strong><small>点</small>
+      </div>
+      <p class="hydrogen-result-summary" id="scenario-result-summary"></p>
+      <div class="accident-explanation" id="scenario-accident" hidden>
+        <article><h3>何が起きた？</h3><p id="scenario-what"></p></article>
+        <article><h3>なぜ起きた？</h3><p id="scenario-why"></p></article>
+        <article><h3>授業で学ぶポイント</h3><p id="scenario-lesson"></p></article>
+      </div>
+      <section class="choice-review">
+        <h3>選択履歴・危険だった行動・改善案</h3>
+        <ol id="scenario-choice-list"></ol>
+      </section>
+      <div class="dummy-stat" id="scenario-stat"></div>
+      <div class="result-actions">
+        <button class="retry-button" id="scenario-retry" type="button">もう一度ためす</button>
+        <button class="menu-result-button" id="scenario-result-menu" type="button">実験選択へ</button>
+      </div>
+    </div>
+  </section>
 
   <main class="game-shell app-screen" id="heating-game" hidden>
     <header class="game-header">
@@ -379,7 +503,9 @@
     </div>
   </section>
 
+  <script src="experiment-engine.js"></script>
   <script src="script.js"></script>
   <script src="hydrogen.js"></script>
+  <script src="hydrogen-sulfide.js"></script>
 </body>
 </html>

@@ -2429,3 +2429,849 @@ legend span {
     padding: 24px 16px;
   }
 }
+
+/* Data-driven scenario: hydrogen sulfide */
+.mission-cards {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.sulfide-mission::after {
+  background: rgba(218, 183, 44, .14);
+}
+
+.sulfide-mission .mission-number {
+  background: #a47d08;
+}
+
+.sulfide-mission .mission-symbol,
+.sulfide-mission .mission-start {
+  color: #9b770b;
+}
+
+.sulfide-mission .mission-symbol {
+  font-size: 48px;
+}
+
+.scenario-shell {
+  width: min(1240px, calc(100% - 32px));
+  margin: 24px auto;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 24px;
+  background: var(--paper);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .35);
+}
+
+.scenario-header {
+  min-height: 92px;
+  padding: 17px 28px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  color: white;
+}
+
+.sulfide-header {
+  border-bottom: 4px solid #f1cf4b;
+  background: linear-gradient(110deg, #292b25, #596039);
+}
+
+.sulfide-mark {
+  width: 62px;
+  color: #fff4a7;
+  border-color: #f1cf4b;
+  font: 800 18px Arial, sans-serif;
+}
+
+.scenario-score {
+  margin-left: auto;
+}
+
+.scenario-layout {
+  min-height: 680px;
+  display: grid;
+  grid-template-columns: .95fr 1.05fr;
+}
+
+.scenario-controls {
+  padding: 32px 36px;
+  background:
+    linear-gradient(rgba(16, 38, 71, .025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 38, 71, .025) 1px, transparent 1px),
+    white;
+  background-size: 20px 20px;
+}
+
+.scenario-progress {
+  margin: 18px 0 36px;
+}
+
+.scenario-progress span {
+  background: linear-gradient(90deg, #a47d08, #f1cf4b);
+}
+
+.scenario-observation {
+  border-left-color: #b38a13;
+  background: #fff9df;
+}
+
+.scenario-observation span {
+  color: #8c6a08;
+}
+
+.scenario-next {
+  background: #a47d08;
+  box-shadow: 0 6px 0 #6e5204;
+}
+
+.scenario-next:hover {
+  box-shadow: 0 8px 0 #6e5204;
+}
+
+.scenario-next:disabled {
+  background: #dce5eb;
+  box-shadow: 0 5px 0 #bccbd5;
+}
+
+.scenario-controls .option-card input:checked + span {
+  border-color: #a47d08;
+  background: #a47d08;
+  box-shadow: 0 5px 0 #6e5204;
+}
+
+.sulfide-stage {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  background: #353b2e;
+}
+
+.sulfide-status-light {
+  background: #f1cf4b;
+  box-shadow: 0 0 8px #f1cf4b;
+}
+
+.sulfide-tip {
+  background: #f1cf4b;
+}
+
+.sulfide-scene {
+  position: relative;
+  min-height: 500px;
+  flex: 1;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-top: 0;
+  border-radius: 0 0 10px 10px;
+  background: linear-gradient(#778268 0 70%, #44483c 70%);
+  isolation: isolate;
+}
+
+.classroom-wall {
+  position: absolute;
+  inset: 0 0 30%;
+  z-index: -2;
+  background:
+    linear-gradient(rgba(255, 255, 255, .08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .08) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.classroom-window {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  width: 125px;
+  height: 105px;
+  overflow: hidden;
+  border: 8px solid #e7ede0;
+  background: #9ed1d7;
+  box-shadow: inset 0 0 0 3px #536c6b;
+}
+
+.classroom-window::before,
+.classroom-window::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  background: #e7ede0;
+}
+
+.classroom-window::before {
+  top: 45px;
+  width: 100%;
+  height: 7px;
+}
+
+.classroom-window::after {
+  left: 53px;
+  width: 7px;
+  height: 100%;
+}
+
+.classroom-window i {
+  position: absolute;
+  inset: 0 50% 0 0;
+  border-right: 3px solid #536c6b;
+  background: rgba(255, 255, 255, .15);
+  transition: transform .6s;
+}
+
+.classroom-window i:nth-child(2) {
+  right: 0;
+  left: 50%;
+  border-right: 0;
+  border-left: 3px solid #536c6b;
+}
+
+.ventilation-open .classroom-window i:first-child,
+.ventilation-fan .classroom-window i:first-child,
+.effect-open .classroom-window i:first-child,
+.effect-fan .classroom-window i:first-child {
+  transform: translateX(-70%);
+}
+
+.ventilation-open .classroom-window i:nth-child(2),
+.ventilation-fan .classroom-window i:nth-child(2),
+.effect-open .classroom-window i:nth-child(2),
+.effect-fan .classroom-window i:nth-child(2) {
+  transform: translateX(70%);
+}
+
+.classroom-floor {
+  position: absolute;
+  right: 0;
+  bottom: 86px;
+  left: 0;
+  height: 50px;
+  z-index: -1;
+  border-top: 5px solid #9d704b;
+  background: #765138;
+}
+
+.sulfide-rig {
+  position: absolute;
+  left: 13%;
+  bottom: 125px;
+  width: 205px;
+  height: 245px;
+}
+
+.sulfide-test-tube {
+  position: absolute;
+  left: 30px;
+  bottom: 0;
+  width: 68px;
+  height: 185px;
+  overflow: hidden;
+  border: 4px solid rgba(239, 249, 231, .9);
+  border-top: 0;
+  border-radius: 0 0 34px 34px;
+  background: rgba(221, 239, 210, .12);
+}
+
+.sulfide-stopper {
+  position: absolute;
+  left: 24px;
+  top: 53px;
+  width: 80px;
+  height: 25px;
+  border-radius: 5px;
+  background: #4c5047;
+}
+
+.sulfide-delivery {
+  position: absolute;
+  left: 61px;
+  top: 8px;
+  width: 155px;
+  height: 87px;
+  border: 8px solid #dfeeda;
+  border-bottom: 0;
+  border-left-color: transparent;
+  border-radius: 0 36px 0 0;
+}
+
+.iron-sulfide {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  left: 8px;
+  height: 45px;
+  z-index: 2;
+  transition: height .4s;
+}
+
+.iron-sulfide i {
+  position: absolute;
+  bottom: 0;
+  width: 19px;
+  height: 15px;
+  border-radius: 4px;
+  background: #34382f;
+  box-shadow: inset 3px 3px 0 #626a57;
+  transform: rotate(12deg);
+}
+
+.iron-sulfide i:nth-child(2) { left: 20px; transform: rotate(-10deg); }
+.iron-sulfide i:nth-child(3) { left: 38px; transform: rotate(17deg); }
+.iron-sulfide i:nth-child(4) { left: 12px; bottom: 14px; transform: rotate(-4deg); }
+
+.ironSulfide-small .iron-sulfide i:nth-child(n+3) {
+  display: none;
+}
+
+.ironSulfide-large .iron-sulfide {
+  height: 75px;
+}
+
+.ironSulfide-large .iron-sulfide i {
+  transform: scale(1.25) rotate(12deg);
+}
+
+.sulfide-liquid {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  left: 3px;
+  height: 0;
+  border-radius: 0 0 28px 28px;
+  background: linear-gradient(rgba(214, 225, 114, .75), rgba(149, 162, 55, .85));
+  transition: height .5s;
+}
+
+.acid-drops .sulfide-liquid { height: 58px; }
+.acid-half .sulfide-liquid { height: 95px; }
+.acid-lots .sulfide-liquid { height: 145px; }
+
+.sulfide-bubbles {
+  position: absolute;
+  inset: 0;
+}
+
+.sulfide-bubbles i {
+  position: absolute;
+  left: 13px;
+  bottom: 25px;
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  border: 2px solid #f4ef9b;
+  border-radius: 50%;
+}
+
+.effect-reaction .sulfide-bubbles i,
+.acid-drops .sulfide-bubbles i,
+.acid-half .sulfide-bubbles i,
+.acid-lots .sulfide-bubbles i {
+  animation: sulfide-bubble 1.15s linear infinite;
+}
+
+.sulfide-bubbles i:nth-child(2) { left: 30px; animation-delay: .22s; }
+.sulfide-bubbles i:nth-child(3) { left: 43px; animation-delay: .44s; }
+.sulfide-bubbles i:nth-child(4) { left: 20px; animation-delay: .66s; }
+.sulfide-bubbles i:nth-child(5) { left: 38px; animation-delay: .88s; }
+
+.effect-active .sulfide-bubbles i,
+.effect-vigorous .sulfide-bubbles i {
+  width: 14px;
+  height: 14px;
+  animation-duration: .55s;
+}
+
+@keyframes sulfide-bubble {
+  0% { opacity: 0; transform: translateY(0) scale(.5); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-125px) scale(1.3); }
+}
+
+.gas-clouds {
+  position: absolute;
+  right: 5%;
+  bottom: 105px;
+  left: 24%;
+  height: 180px;
+  pointer-events: none;
+}
+
+.gas-clouds i {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 90px;
+  height: 45px;
+  opacity: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(215, 213, 92, .55), rgba(144, 142, 45, .25) 60%, transparent 72%);
+  filter: blur(2px);
+}
+
+.acid-drops .gas-clouds i,
+.acid-half .gas-clouds i,
+.acid-lots .gas-clouds i {
+  opacity: .45;
+  animation: gas-spread 4s ease-out infinite;
+}
+
+.gas-clouds i:nth-child(2) { animation-delay: .6s; }
+.gas-clouds i:nth-child(3) { animation-delay: 1.2s; }
+.gas-clouds i:nth-child(4) { animation-delay: 1.8s; }
+.gas-clouds i:nth-child(5) { animation-delay: 2.4s; }
+.gas-clouds i:nth-child(6) { animation-delay: 3s; }
+
+.acid-half .gas-clouds i { width: 120px; opacity: .62; }
+.acid-lots .gas-clouds i { width: 155px; height: 65px; opacity: .78; animation-duration: 2.2s; }
+
+@keyframes gas-spread {
+  from { transform: translate(0, -65px) scale(.5); }
+  to { transform: translate(330px, 50px) scale(1.45); opacity: .1; }
+}
+
+.effect-closed .gas-clouds i,
+.ventilation-closed .gas-clouds i {
+  animation-name: gas-stagnate;
+}
+
+@keyframes gas-stagnate {
+  from { transform: translate(0, 0) scale(.7); }
+  to { transform: translate(180px, 55px) scale(1.8); opacity: .75; }
+}
+
+.effect-open .gas-clouds i,
+.ventilation-open .gas-clouds i {
+  animation-name: gas-to-window;
+  animation-duration: 2.2s;
+}
+
+.effect-fan .gas-clouds i,
+.ventilation-fan .gas-clouds i {
+  animation-name: gas-to-window;
+  animation-duration: 1.1s;
+}
+
+@keyframes gas-to-window {
+  to { transform: translate(335px, -180px) scale(.4); opacity: 0; }
+}
+
+.fan {
+  position: absolute;
+  top: 145px;
+  right: 170px;
+  width: 80px;
+  height: 80px;
+  display: none;
+  border: 8px solid #dce7dc;
+  border-radius: 50%;
+  background: #657164;
+}
+
+.effect-fan .fan,
+.ventilation-fan .fan {
+  display: block;
+}
+
+.fan i {
+  position: absolute;
+  top: 31px;
+  left: 31px;
+  width: 31px;
+  height: 12px;
+  border-radius: 50%;
+  background: #d7e4d6;
+  transform-origin: 0 50%;
+  animation: fan-spin .35s linear infinite;
+}
+
+.fan i:nth-child(2) { transform: rotate(120deg); }
+.fan i:nth-child(3) { transform: rotate(240deg); }
+
+@keyframes fan-spin {
+  to { rotate: 360deg; }
+}
+
+.student-group {
+  position: absolute;
+  right: 9%;
+  bottom: 125px;
+  width: 205px;
+  height: 140px;
+}
+
+.student {
+  position: absolute;
+  bottom: 0;
+  width: 55px;
+  height: 105px;
+}
+
+.student.s2 { left: 73px; }
+.student.s3 { left: 146px; }
+
+.student i {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  width: 36px;
+  height: 39px;
+  border-radius: 50%;
+  background: #efb58d;
+}
+
+.student i::before,
+.student i::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  width: 5px;
+  height: 3px;
+  background: #303532;
+}
+
+.student i::before { left: 8px; }
+.student i::after { right: 8px; }
+
+.student span {
+  position: absolute;
+  bottom: 0;
+  width: 55px;
+  height: 70px;
+  border-radius: 20px 20px 5px 5px;
+  background: #d9e7d5;
+}
+
+.effect-direct .student:first-child {
+  animation: student-approach 1s both;
+}
+
+@keyframes student-approach {
+  to { transform: translate(-245px, -55px) rotate(-12deg); }
+}
+
+.effect-waft .student:first-child::after {
+  content: "〰";
+  position: absolute;
+  top: 5px;
+  left: -50px;
+  color: #f2e56b;
+  font-size: 35px;
+  animation: waft 1s infinite alternate;
+}
+
+@keyframes waft {
+  to { transform: translateX(25px); opacity: .3; }
+}
+
+.waste-station {
+  position: absolute;
+  left: 44%;
+  bottom: 125px;
+  width: 95px;
+  height: 145px;
+  opacity: .55;
+}
+
+.waste-bottle {
+  position: absolute;
+  bottom: 0;
+  width: 80px;
+  height: 100px;
+  overflow: hidden;
+  border: 4px solid #d9e6d5;
+  border-radius: 8px 8px 18px 18px;
+  color: #30382e;
+  background: rgba(255, 255, 255, .2);
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  padding-top: 15px;
+}
+
+.waste-bottle i {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  left: 3px;
+  height: 0;
+  z-index: -1;
+  background: #9ba343;
+}
+
+.effect-waste .waste-station,
+.waste-combine .waste-station,
+.waste-dilute .waste-station {
+  opacity: 1;
+}
+
+.effect-waste .waste-bottle i {
+  animation: waste-fill 1.5s ease forwards;
+}
+
+.waste-pour {
+  position: absolute;
+  top: 0;
+  left: 35px;
+  width: 10px;
+  height: 60px;
+  opacity: 0;
+  background: #c2c765;
+}
+
+.effect-waste .waste-pour {
+  opacity: 1;
+  animation: waste-pour 1s infinite;
+}
+
+.effect-dilute .waste-pour {
+  background: #a9d9cf;
+}
+
+@keyframes waste-fill { to { height: 63px; } }
+@keyframes waste-pour { 50% { transform: scaleY(.7); opacity: .55; } }
+
+.sulfide-warning {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  z-index: 9;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  color: #332900;
+  border: 3px solid #fff4a2;
+  border-radius: 5px;
+  background: #f3cf32;
+  box-shadow: 0 0 25px #f3cf32;
+}
+
+.sulfide-warning span {
+  font-size: 25px;
+}
+
+.sulfide-warning strong {
+  font-size: 12px;
+}
+
+.sulfide-danger .sulfide-warning {
+  animation: sulfide-alert .35s infinite alternate;
+}
+
+@keyframes sulfide-alert {
+  to { opacity: 1; transform: scale(1.05); }
+}
+
+.sulfide-danger::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  background: rgba(30, 30, 20, .67);
+  animation: dark-pulse .65s infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes dark-pulse {
+  to { background: rgba(15, 15, 8, .88); }
+}
+
+.accident-direct-inhalation .student:first-child,
+.accident-classroom-exposure .student {
+  z-index: 8;
+  animation: student-sick .55s infinite alternate;
+}
+
+.accident-classroom-exposure .student:nth-child(2) { animation-delay: .18s; }
+.accident-classroom-exposure .student:nth-child(3) { animation-delay: .36s; }
+
+@keyframes student-sick {
+  to { transform: translateY(18px) rotate(16deg); filter: grayscale(.6) sepia(.5); }
+}
+
+.danger-zone {
+  position: absolute;
+  right: 2%;
+  bottom: 100px;
+  left: 2%;
+  z-index: 8;
+  height: 135px;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  color: #3e3300;
+  border: 5px dashed #fff07a;
+  background: repeating-linear-gradient(-45deg, rgba(243, 207, 50, .5) 0 15px, rgba(42, 39, 17, .3) 15px 30px);
+  font: 800 22px Arial, sans-serif;
+  letter-spacing: .13em;
+}
+
+.accident-classroom-exposure .danger-zone {
+  animation: danger-zone-in .6s both;
+}
+
+@keyframes danger-zone-in {
+  from { opacity: 0; transform: scale(.8); }
+  to { opacity: .8; transform: scale(1); }
+}
+
+.ambulance-alert {
+  position: absolute;
+  top: 88px;
+  right: 25px;
+  z-index: 10;
+  padding: 12px 15px;
+  opacity: 0;
+  color: white;
+  border: 3px solid white;
+  border-radius: 5px;
+  background: #d73845;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.ambulance-alert span {
+  margin-right: 7px;
+  font-size: 20px;
+}
+
+.sulfide-danger .ambulance-alert {
+  animation: ambulance-alert 1s .5s infinite alternate;
+}
+
+@keyframes ambulance-alert {
+  to { opacity: 1; box-shadow: 0 0 25px #ff5664; }
+}
+
+.effect-map .student-group,
+.effect-map .waste-station,
+.effect-map .gas-clouds {
+  z-index: 4;
+  filter: drop-shadow(0 0 8px rgba(255, 244, 162, .5));
+}
+
+.simulation-safe .gas-clouds i {
+  animation: gas-to-window 1.2s ease-out forwards;
+}
+
+.scenario-result-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  padding: 20px;
+  display: grid;
+  place-items: center;
+  background: rgba(4, 15, 20, .86);
+  backdrop-filter: blur(9px);
+}
+
+.scenario-result-card {
+  width: min(780px, 100%);
+  max-height: calc(100vh - 40px);
+  padding: 30px 34px;
+  overflow-y: auto;
+  border: 3px solid #b38a13;
+  border-radius: 18px;
+  background: white;
+  box-shadow: 8px 8px 0 #b38a13, 0 25px 70px rgba(0, 0, 0, .45);
+  animation: result-enter .35s ease both;
+}
+
+.scenario-result-card.game-over {
+  border-color: #e2bf22;
+  box-shadow: 8px 8px 0 #e2bf22, 0 25px 70px rgba(0, 0, 0, .45);
+}
+
+.scenario-result-card > .result-kicker,
+.scenario-result-card > h2,
+.scenario-result-card > .hydrogen-result-summary {
+  text-align: center;
+}
+
+.scenario-result-card > h2 {
+  margin: 5px 0 12px;
+  color: var(--navy);
+  font-size: 29px;
+}
+
+.scenario-result-card .final-score strong {
+  color: #a47d08;
+}
+
+.scenario-result-card.game-over .final-score strong {
+  color: #c79a0c;
+}
+
+@media (max-width: 1050px) {
+  .mission-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .scenario-shell {
+    width: min(650px, calc(100% - 20px));
+  }
+
+  .scenario-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sulfide-stage {
+    min-height: 570px;
+  }
+}
+
+@media (max-width: 620px) {
+  .mission-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .scenario-header {
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .scenario-header h1 {
+    font-size: 19px;
+  }
+
+  .scenario-header .eyebrow,
+  .scenario-score span {
+    display: none;
+  }
+
+  .scenario-controls {
+    padding: 25px 18px;
+  }
+
+  .sulfide-stage {
+    padding: 14px;
+  }
+
+  .sulfide-scene {
+    min-height: 455px;
+  }
+
+  .sulfide-rig {
+    left: 1%;
+    transform: scale(.75);
+    transform-origin: bottom left;
+  }
+
+  .student-group {
+    right: 1%;
+    transform: scale(.75);
+    transform-origin: bottom right;
+  }
+
+  .waste-station {
+    left: 43%;
+    transform: scale(.75);
+    transform-origin: bottom;
+  }
+
+  .scenario-result-card {
+    padding: 24px 16px;
+  }
+}
