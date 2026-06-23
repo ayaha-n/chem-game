@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#102647">
+  <title>ヒート・ラボ｜試験管加熱チャレンジ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game-shell">
+    <header class="game-header">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">⚗</span>
+        <div>
+          <p class="eyebrow">SCIENCE SAFETY MISSION</p>
+          <h1>ヒート・ラボ</h1>
+        </div>
+      </div>
+      <div class="mission-badge">
+        <span>MISSION 01</span>
+        <strong>試験管加熱</strong>
+      </div>
+    </header>
+
+    <section class="game-grid">
+      <section class="control-panel" aria-labelledby="control-title">
+        <div class="panel-heading">
+          <div>
+            <p class="step-label">実験条件を設定せよ</p>
+            <h2 id="control-title">安全な方法を選ぼう</h2>
+          </div>
+          <div class="progress-dots" aria-label="4項目">
+            <i></i><i></i><i></i><i></i>
+          </div>
+        </div>
+
+        <form id="experiment-form">
+          <fieldset>
+            <legend><span>01</span> 液体の量</legend>
+            <div class="option-row three">
+              <label class="option-card">
+                <input type="radio" name="amount" value="low">
+                <span>少ない</span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="amount" value="proper" checked>
+                <span>適量</span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="amount" value="high">
+                <span>多い</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span>02</span> 試験管の向き</legend>
+            <div class="option-row">
+              <label class="option-card">
+                <input type="radio" name="direction" value="toward">
+                <span>人に向ける</span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="direction" value="away" checked>
+                <span>人に向けない</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span>03</span> 加熱方法</legend>
+            <div class="option-row">
+              <label class="option-card">
+                <input type="radio" name="heating" value="moving" checked>
+                <span>動かしながら加熱</span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="heating" value="fixed">
+                <span>一点加熱</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span>04</span> 冷却方法</legend>
+            <div class="option-row">
+              <label class="option-card">
+                <input type="radio" name="cooling" value="natural" checked>
+                <span>自然冷却</span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="cooling" value="rapid">
+                <span>急冷</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <button class="start-button" type="submit">
+            <span class="button-icon">▶</span>
+            実験開始
+            <span class="button-shine" aria-hidden="true"></span>
+          </button>
+        </form>
+      </section>
+
+      <section class="lab-stage" aria-label="実験プレビュー">
+        <div class="status-strip">
+          <span class="status-light"></span>
+          <span id="stage-status">STANDBY</span>
+          <span class="status-code">LAB-01</span>
+        </div>
+
+        <div class="stage-scene" id="stage-scene">
+          <div class="wall-grid" aria-hidden="true"></div>
+          <div class="warning-sign" aria-hidden="true">!</div>
+          <div class="person" aria-hidden="true">
+            <div class="person-head">
+              <span class="hair"></span>
+            </div>
+            <div class="person-body"></div>
+          </div>
+          <div class="apparatus" id="apparatus" aria-hidden="true">
+            <div class="holder"></div>
+            <div class="test-tube">
+              <div class="tube-glass"></div>
+              <div class="liquid" id="liquid">
+                <span class="bubble b1"></span>
+                <span class="bubble b2"></span>
+                <span class="bubble b3"></span>
+              </div>
+              <div class="tube-shine"></div>
+              <div class="cracks"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <div class="burner" aria-hidden="true">
+            <div class="flame"><i></i></div>
+            <div class="burner-neck"></div>
+            <div class="burner-body"></div>
+            <div class="burner-base"></div>
+          </div>
+          <div class="splash-zone" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i>
+          </div>
+          <div class="steam" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="desk" aria-hidden="true"></div>
+          <p class="stage-hint" id="stage-hint">条件を選んで、実験を開始しよう。</p>
+        </div>
+
+        <div class="safety-tip">
+          <span class="tip-icon">i</span>
+          <p><strong>安全メモ</strong> 試験管の口は、のぞき込まないこと。</p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <section class="result-overlay" id="result-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="result-title">
+    <div class="result-card" id="result-card">
+      <button class="close-button" id="close-result" type="button" aria-label="結果を閉じる">×</button>
+      <div class="result-visual">
+        <div class="result-icon" id="result-icon">!</div>
+        <div class="impact-lines" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      </div>
+      <p class="result-kicker" id="result-kicker">EXPERIMENT RESULT</p>
+      <h2 id="result-title">実験結果</h2>
+      <p class="result-summary" id="result-summary"></p>
+
+      <div class="result-details">
+        <article>
+          <span class="detail-number">01</span>
+          <div>
+            <h3>何が危険だった？</h3>
+            <p id="danger-text"></p>
+          </div>
+        </article>
+        <article>
+          <span class="detail-number">02</span>
+          <div>
+            <h3>授業で学ぶポイント</h3>
+            <p id="lesson-text"></p>
+          </div>
+        </article>
+      </div>
+
+      <button class="retry-button" id="retry-button" type="button">もう一度ためす</button>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
