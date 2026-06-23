@@ -136,36 +136,81 @@ h1 {
   font-size: 23px;
 }
 
-.progress-dots {
+.step-counter {
   display: flex;
-  gap: 5px;
+  align-items: baseline;
+  gap: 4px;
+  color: var(--muted);
+  font: 700 13px "Arial", monospace;
 }
 
-.progress-dots i {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--cyan);
+.step-counter strong {
+  color: var(--blue);
+  font-size: 28px;
+  line-height: 1;
+}
+
+.step-progress {
+  height: 7px;
+  margin-bottom: 34px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #e3ebf1;
+}
+
+.step-progress span {
+  display: block;
+  width: 25%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  transition: width .3s ease;
 }
 
 fieldset {
-  margin: 0 0 16px;
+  margin: 0;
   padding: 0;
   border: 0;
 }
 
+.question-step {
+  min-height: 280px;
+  animation: question-in .3s ease both;
+}
+
+.question-step[hidden] {
+  display: none;
+}
+
+@keyframes question-in {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 legend {
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 7px;
   color: var(--navy);
-  font-size: 14px;
+  font-size: 22px;
   font-weight: 800;
 }
 
 legend span {
   margin-right: 9px;
   color: var(--blue);
-  font: 700 12px "Arial", monospace;
+  font: 700 14px "Arial", monospace;
+}
+
+.question-guide {
+  margin: 0 0 24px;
+  color: var(--muted);
+  font-size: 13px;
 }
 
 .option-row {
@@ -191,8 +236,8 @@ legend span {
 }
 
 .option-card span {
-  min-height: 48px;
-  padding: 8px 10px;
+  min-height: 86px;
+  padding: 12px 10px;
   display: grid;
   place-items: center;
   text-align: center;
@@ -200,7 +245,7 @@ legend span {
   border: 2px solid var(--line);
   border-radius: 9px;
   background: rgba(255, 255, 255, .9);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   transition: transform .15s, border-color .15s, background .15s, box-shadow .15s;
 }
@@ -224,16 +269,63 @@ legend span {
 }
 
 .start-button,
+.next-button,
+.back-button,
 .retry-button {
-  width: 100%;
   border: 0;
   cursor: pointer;
   font-weight: 800;
 }
 
+.step-actions {
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
+}
+
+.back-button {
+  min-width: 116px;
+  padding: 15px 18px;
+  color: var(--muted);
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  background: white;
+}
+
+.back-button:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.next-button {
+  flex: 1;
+  padding: 16px 24px;
+  color: white;
+  border-radius: 10px;
+  background: var(--blue);
+  box-shadow: 0 6px 0 #0d4c9c;
+  font-size: 16px;
+  letter-spacing: .08em;
+  transition: transform .15s, box-shadow .15s;
+}
+
+.next-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 #0d4c9c;
+}
+
+.next-button:disabled,
+.start-button:disabled {
+  color: #8ca0b4;
+  background: #dce5eb;
+  box-shadow: 0 5px 0 #bccbd5;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .start-button {
+  flex: 1;
   position: relative;
-  margin-top: 5px;
   padding: 16px 24px;
   overflow: hidden;
   color: var(--navy-deep);
@@ -243,6 +335,11 @@ legend span {
   font-size: 17px;
   letter-spacing: .08em;
   transition: transform .15s, box-shadow .15s;
+}
+
+.start-button[hidden],
+.next-button[hidden] {
+  display: none;
 }
 
 .start-button:hover {
@@ -955,9 +1052,22 @@ legend span {
   }
 
   .option-card span {
-    min-height: 54px;
+    min-height: 72px;
     padding: 6px;
     font-size: 12px;
+  }
+
+  .question-step {
+    min-height: 245px;
+  }
+
+  .step-actions {
+    gap: 8px;
+  }
+
+  .back-button {
+    min-width: 94px;
+    padding-inline: 10px;
   }
 
   .lab-stage {

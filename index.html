@@ -30,21 +30,27 @@
             <p class="step-label">実験条件を設定せよ</p>
             <h2 id="control-title">安全な方法を選ぼう</h2>
           </div>
-          <div class="progress-dots" aria-label="4項目">
-            <i></i><i></i><i></i><i></i>
+          <div class="step-counter" aria-live="polite">
+            <strong id="current-step-number">1</strong>
+            <span>/ 4</span>
           </div>
         </div>
 
         <form id="experiment-form">
-          <fieldset>
+          <div class="step-progress" aria-hidden="true">
+            <span id="step-progress-bar"></span>
+          </div>
+
+          <fieldset class="question-step active" data-step="0">
             <legend><span>01</span> 液体の量</legend>
+            <p class="question-guide">加熱して変化を観察するには、どのくらい入れる？</p>
             <div class="option-row three">
               <label class="option-card">
                 <input type="radio" name="amount" value="low">
                 <span>少ない</span>
               </label>
               <label class="option-card">
-                <input type="radio" name="amount" value="proper" checked>
+                <input type="radio" name="amount" value="proper">
                 <span>適量</span>
               </label>
               <label class="option-card">
@@ -54,25 +60,27 @@
             </div>
           </fieldset>
 
-          <fieldset>
+          <fieldset class="question-step" data-step="1" hidden>
             <legend><span>02</span> 試験管の向き</legend>
+            <p class="question-guide">試験管の口は、どちらに向ける？</p>
             <div class="option-row">
               <label class="option-card">
                 <input type="radio" name="direction" value="toward">
                 <span>人に向ける</span>
               </label>
               <label class="option-card">
-                <input type="radio" name="direction" value="away" checked>
+                <input type="radio" name="direction" value="away">
                 <span>人に向けない</span>
               </label>
             </div>
           </fieldset>
 
-          <fieldset>
+          <fieldset class="question-step" data-step="2" hidden>
             <legend><span>03</span> 加熱方法</legend>
+            <p class="question-guide">炎に当てるとき、試験管をどう動かす？</p>
             <div class="option-row">
               <label class="option-card">
-                <input type="radio" name="heating" value="moving" checked>
+                <input type="radio" name="heating" value="moving">
                 <span>動かしながら加熱</span>
               </label>
               <label class="option-card">
@@ -82,11 +90,12 @@
             </div>
           </fieldset>
 
-          <fieldset>
+          <fieldset class="question-step" data-step="3" hidden>
             <legend><span>04</span> 冷却方法</legend>
+            <p class="question-guide">加熱し終わった試験管は、どう冷ます？</p>
             <div class="option-row">
               <label class="option-card">
-                <input type="radio" name="cooling" value="natural" checked>
+                <input type="radio" name="cooling" value="natural">
                 <span>自然冷却</span>
               </label>
               <label class="option-card">
@@ -96,11 +105,17 @@
             </div>
           </fieldset>
 
-          <button class="start-button" type="submit">
-            <span class="button-icon">▶</span>
-            実験開始
-            <span class="button-shine" aria-hidden="true"></span>
-          </button>
+          <div class="step-actions">
+            <button class="back-button" id="back-button" type="button" disabled>← もどる</button>
+            <button class="next-button" id="next-button" type="button">
+              次へ <span aria-hidden="true">→</span>
+            </button>
+            <button class="start-button" id="start-button" type="submit" hidden>
+              <span class="button-icon">▶</span>
+              実験開始
+              <span class="button-shine" aria-hidden="true"></span>
+            </button>
+          </div>
         </form>
       </section>
 

@@ -8,6 +8,13 @@ const apparatus = document.querySelector("#apparatus");
 const liquid = document.querySelector("#liquid");
 const stageStatus = document.querySelector("#stage-status");
 const stageHint = document.querySelector("#stage-hint");
+const questionSteps = [...document.querySelectorAll(".question-step")];
+const currentStepNumber = document.querySelector("#current-step-number");
+const progressBar = document.querySelector("#step-progress-bar");
+const backButton = document.querySelector("#back-button");
+const nextButton = document.querySelector("#next-button");
+const startButton = document.querySelector("#start-button");
+let currentStep = 0;
 
 const resultContent = {
   success: {
@@ -72,11 +79,39 @@ function getSelections() {
 
 function updatePreview() {
   const choices = getSelections();
-  liquid.className = `liquid ${choices.amount}`;
+  liquid.className = `liquid ${choices.amount || ""}`;
   apparatus.classList.toggle("toward", choices.direction === "toward");
   stageHint.textContent = choices.direction === "toward"
     ? "注意：試験管の口が人の方向を向いています。"
     : "条件を選んで、実験を開始しよう。";
+}
+
+function syncStepActions() {
+  const hasAnswer = Boolean(questionSteps[currentStep].querySelector("input:checked"));
+  nextButton.disabled = !hasAnswer;
+  startButton.disabled = !hasAnswer;
+}
+
+function showStep(step) {
+  currentStep = Math.max(0, Math.min(step, questionSteps.length - 1));
+
+  questionSteps.forEach((question, index) => {
+    const isActive = index === currentStep;
+    question.hidden = !isActive;
+    question.classList.toggle("active", isActive);
+  });
+
+  currentStepNumber.textContent = currentStep + 1;
+  progressBar.style.width = `${((currentStep + 1) / questionSteps.length) * 100}%`;
+  backButton.disabled = currentStep === 0;
+
+  const isLastStep = currentStep === questionSteps.length - 1;
+  nextButton.hidden = isLastStep;
+  startButton.hidden = !isLastStep;
+  syncStepActions();
+
+  const activeChoice = questionSteps[currentStep].querySelector("input:checked");
+  if (activeChoice) activeChoice.focus({ preventScroll: true });
 }
 
 function chooseResult(choices) {
@@ -121,13 +156,27 @@ function closeResult() {
   updatePreview();
   stageStatus.textContent = "STANDBY";
   stageHint.textContent = "条件を変えて、もう一度ためしてみよう。";
-  document.querySelector(".start-button").focus();
+  showStep(0);
+  nextButton.focus();
 }
 
-form.addEventListener("change", updatePreview);
+form.addEventListener("change", () => {
+  updatePreview();
+  syncStepActions();
+});
+
+nextButton.addEventListener("click", () => {
+  showStep(currentStep + 1);
+});
+
+backButton.addEventListener("click", () => {
+  showStep(currentStep - 1);
+});
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
+  if (!questionSteps[currentStep].querySelector("input:checked")) return;
+
   const choices = getSelections();
   const result = chooseResult(choices);
 
@@ -155,3 +204,4 @@ document.addEventListener("keydown", (event) => {
 });
 
 updatePreview();
+showStep(0);
