@@ -14,8 +14,17 @@ class ExperimentScenario {
   }
 
   getOption(stepId, value) {
-    return this.steps.find((step) => step.id === stepId)
-      ?.options.find((option) => option.value === value);
+    const step = this.steps.find((item) => item.id === stepId);
+    if (!step) return null;
+    if (step.input?.type === "range") {
+      const amount = Number(value);
+      return step.options.find((option) => {
+        const min = option.min ?? -Infinity;
+        const max = option.max ?? Infinity;
+        return amount >= min && amount <= max;
+      });
+    }
+    return step.options.find((option) => option.value === value);
   }
 }
 
@@ -73,6 +82,12 @@ class ScenarioRunner {
     this.el.question.addEventListener("change", () => {
       this.el.next.disabled = false;
     });
+    this.el.question.addEventListener("input", (event) => {
+      if (event.target.matches("input[type='range'][name='scenario-choice']")) {
+        this.updateRangeReadout(event.target);
+        this.el.next.disabled = false;
+      }
+    });
     this.el.next.addEventListener("click", () => this.advance());
     this.el.back.addEventListener("click", () => this.goBack());
     this.el.retry.addEventListener("click", () => this.reset());
@@ -88,6 +103,7 @@ class ScenarioRunner {
       score: this.scenario.initialScore,
       choices: {},
       history: [],
+      inputs: {},
       flags: {},
       risk: 0,
       locked: false,
@@ -115,19 +131,60 @@ class ScenarioRunner {
       <fieldset class="hydrogen-question">
         <legend><span>${String(this.state.step + 1).padStart(2, "0")}</span> ${step.title}</legend>
         <p class="question-guide">${step.prompt}</p>
-        <div class="hydrogen-option-grid ${step.options.length === 3 ? "three" : ""}">
-          ${step.options.map((option) => `
-            <label class="option-card">
-              <input type="radio" name="scenario-choice" value="${option.value}" ${selected === option.value ? "checked" : ""}>
-              <span>${option.label}</span>
-            </label>
-          `).join("")}
-        </div>
+        ${step.input?.type === "range" ? this.renderRangeInput(step) : this.renderOptionGrid(step, selected)}
       </fieldset>
     `;
     this.el.back.disabled = this.state.step === 0 || this.state.locked;
-    this.el.next.disabled = !selected;
+    this.el.next.disabled = step.input?.type === "range" ? false : !selected;
     this.el.next.innerHTML = `${step.actionLabel ?? "操作する"} <span aria-hidden="true">→</span>`;
+  }
+
+  renderOptionGrid(step, selected) {
+    return `
+      <div class="hydrogen-option-grid ${step.options.length === 3 ? "three" : ""}">
+        ${step.options.map((option) => `
+          <label class="option-card">
+            <input type="radio" name="scenario-choice" value="${option.value}" ${selected === option.value ? "checked" : ""}>
+            <span>${option.label}</span>
+          </label>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  renderRangeInput(step) {
+    const input = step.input;
+    const value = this.state.inputs[step.id] ?? input.default ?? input.min ?? 0;
+    const unit = input.unit ?? "";
+    const option = this.scenario.getOption(step.id, value);
+    return `
+      <div class="range-control">
+        <div class="range-readout">
+          <strong><span data-range-value>${value}</span>${unit}</strong>
+          <small data-range-label>${option?.label ?? ""}</small>
+        </div>
+        <input
+          type="range"
+          name="scenario-choice"
+          min="${input.min}"
+          max="${input.max}"
+          step="${input.step ?? 1}"
+          value="${value}"
+          aria-label="${input.label ?? step.title}"
+        >
+        <div class="range-scale">
+          <span>${input.min}${unit}</span>
+          <span>${input.max}${unit}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  updateRangeReadout(input) {
+    const step = this.scenario.getStep(this.state.step);
+    const option = this.scenario.getOption(step.id, input.value);
+    this.el.question.querySelector("[data-range-value]").textContent = input.value;
+    this.el.question.querySelector("[data-range-label]").textContent = option?.label ?? "";
   }
 
   advance() {
@@ -138,11 +195,13 @@ class ScenarioRunner {
       return;
     }
 
-    const input = this.el.question.querySelector("input:checked");
+    const input = this.el.question.querySelector("input[name='scenario-choice']:checked")
+      ?? this.el.question.querySelector("input[type='range'][name='scenario-choice']");
     if (!input || this.state.locked) return;
     const step = this.scenario.getStep(this.state.step);
     const option = this.scenario.getOption(step.id, input.value);
-    this.record(step, option);
+    if (!option) return;
+    this.record(step, option, input.value);
     this.setLocked(true);
     this.effects.play?.(step.effect, option.effect, this.state, step, option);
 
@@ -165,7 +224,7 @@ class ScenarioRunner {
     }, delay);
   }
 
-  record(step, option) {
+  record(step, option, inputValue) {
     const index = this.state.step;
     const removed = this.state.history.filter((entry) => entry.index >= index);
     this.state.score += removed.reduce((sum, entry) => sum + entry.penalty, 0);
@@ -173,6 +232,7 @@ class ScenarioRunner {
     removed.forEach((entry) => {
       (entry.flags ?? []).forEach((flag) => delete this.state.flags[flag]);
       delete this.state.choices[entry.stepId];
+      delete this.state.inputs[entry.stepId];
     });
     this.state.history = this.state.history.filter((entry) => entry.index < index);
 
@@ -184,11 +244,12 @@ class ScenarioRunner {
       this.state.flags[flag] = true;
     });
     this.state.choices[step.id] = option.value;
+    if (step.input?.type === "range") this.state.inputs[step.id] = inputValue;
     this.state.history.push({
       index,
       stepId: step.id,
       stepTitle: step.title,
-      choice: option.label,
+      choice: this.formatChoiceLabel(step, option, inputValue),
       penalty,
       risk,
       flags: option.flags ?? [],
@@ -197,6 +258,11 @@ class ScenarioRunner {
       dangerous: Boolean(option.dangerous || option.accident)
     });
     this.updateScore();
+  }
+
+  formatChoiceLabel(step, option, inputValue) {
+    if (step.input?.type !== "range") return option.label;
+    return `${inputValue}${step.input.unit ?? ""}（${option.label}）`;
   }
 
   resolveAccident(step, option) {
