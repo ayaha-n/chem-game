@@ -1625,6 +1625,51 @@ legend span {
   box-shadow: 0 5px 0 #0c7164;
 }
 
+.range-control {
+  padding: 20px;
+  border: 2px solid var(--line);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, .92);
+}
+
+.range-readout {
+  margin-bottom: 18px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.range-readout strong {
+  color: var(--navy);
+  font: 800 30px/1 Arial, sans-serif;
+}
+
+.range-readout small {
+  min-width: 70px;
+  padding: 6px 10px;
+  color: white;
+  border-radius: 5px;
+  background: #a47d08;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.range-control input[type="range"] {
+  width: 100%;
+  accent-color: #a47d08;
+  cursor: pointer;
+}
+
+.range-scale {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font: 700 12px Arial, sans-serif;
+}
+
 .hydrogen-observation {
   margin-top: -70px;
   margin-bottom: 20px;

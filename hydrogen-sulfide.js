@@ -45,16 +45,29 @@ const hydrogenSulfideScenario = new ExperimentScenario({
       prompt: "硫化鉄に加える塩酸の量を選ぼう。",
       effect: "reaction",
       duration: 1800,
+      input: {
+        type: "range",
+        min: 0.1,
+        max: 5.0,
+        step: 0.1,
+        default: 0.5,
+        unit: "mL",
+        label: "硫化鉄に加える塩酸の量"
+      },
       options: [
         {
           value: "drops",
-          label: "数滴",
+          label: "少量",
+          min: 0.1,
+          max: 1.0,
           effect: "gentle",
           observation: "小さな泡が出て、気体が発生し始めました。"
         },
         {
           value: "half",
-          label: "半分",
+          label: "中量",
+          min: 1.1,
+          max: 3.0,
           effect: "active",
           penalty: 10,
           risk: 1,
@@ -64,7 +77,9 @@ const hydrogenSulfideScenario = new ExperimentScenario({
         },
         {
           value: "lots",
-          label: "たくさん",
+          label: "多量",
+          min: 3.1,
+          max: 5.0,
           effect: "vigorous",
           penalty: 20,
           risk: 2,
